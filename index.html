@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camera Access</title>
+</head>
+<body>
+    <h1>Activate Camera</h1>
+    <a href="#" id="start-camera">Click here to turn on the camera</a>
+    <div style="margin-top: 20px;">
+        <video id="video-feed" autoplay playsinline style="width: 100%; max-width: 500px; display: none;"></video>
+    </div>
+
+    <script>
+        const startCameraLink = document.getElementById('start-camera');
+        const videoFeed = document.getElementById('video-feed');
+
+        startCameraLink.addEventListener('click', async (event) => {
+            event.preventDefault(); // Prevent default anchor behavior
+
+            try {
+                // Access the user's camera
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                
+                // Display the video feed
+                videoFeed.srcObject = stream;
+                videoFeed.style.display = 'block';
+            } catch (error) {
+                alert('Unable to access the camera: ' + error.message);
+            }
+        });
+    </script>
+</body>
+</html>
